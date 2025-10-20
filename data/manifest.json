@@ -1,0 +1,36 @@
+﻿{
+  "case_id": "DEMO-001",
+  "generated_at": "2025-10-20T19:00:00Z",
+  "items": [
+    {
+      "id": "img-001",
+      "type": "image",
+      "title": "Recorte de tela - Perfil",
+      "path": "media/demo-imagem.jpg",
+      "hash_sha256": "sha256:DEMO_IMG_HASH",
+      "source": "Coleta OSINT - 2025-10-10 12:33Z",
+      "notes": "Imagem com metadados preservados. Ligação com seção 1.2 do relatório.",
+      "timestamp": "2025-10-10T12:33:00Z"
+    },
+    {
+      "id": "aud-001",
+      "type": "audio",
+      "title": "Gravação de chamada (trecho)",
+      "path": "media/demo-audio.mp3",
+      "hash_sha256": "sha256:DEMO_AUDIO_HASH",
+      "source": "Anexo fornecido pelo solicitante — cadeia de custódia registrada",
+      "notes": "Transcrição associada à seção 2.3.",
+      "timestamp": "2025-10-11T09:02:00Z"
+    },
+    {
+      "id": "pdf-001",
+      "type": "pdf",
+      "title": "Relatório consolidado (para juntada)",
+      "path": "media/demo-relatorio.pdf",
+      "hash_sha256": "sha256:DEMO_PDF_HASH",
+      "source": "Gerado pelo EÍGUIS",
+      "notes": "Exportação limpa com anexos referenciados por ID.",
+      "timestamp": "2025-10-12T18:41:00Z"
+    }
+  ]
+}
