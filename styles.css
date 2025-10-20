@@ -1,0 +1,68 @@
+/* --- NOVAS CLASSES PARA O NOVO LAYOUT --- */
+
+/* Hero Banner (Para a imagem de circuito flutuante) */
+.hero--banner {
+    min-height: 500px; /* Altura ideal para um banner impactante */
+    padding: 100px 24px;
+    /* O background será a sua imagem de logo/circuito (configurar no style.css existente!) */
+    background-image: url("/assets/eiguis_logo_longo.jpg"); /* Usar a imagem de faixa */
+    background-size: cover; /* Cobre a área do banner */
+    background-position: center center;
+}
+.hero--banner h1 {
+    font-size: clamp(36px, 6vw, 68px); /* Maior e mais impactante */
+    font-weight: 900;
+}
+.lg-hide { display: none; }
+@media (min-width: 900px) { .lg-hide { display: initial; } }
+
+
+/* Seção de Propóstia Dourada (Para contraste) */
+.section--gold-bg {
+    background: linear-gradient(180deg, var(--panel), rgba(15,17,20,.65));
+    border-top: 1px solid var(--gold-3);
+    padding: 72px 24px;
+}
+.section--gold-bg h2 { color: var(--gold); }
+.card--dark {
+    background: var(--bg);
+    box-shadow: 0 4px 12px rgba(0,0,0,.5);
+}
+.text-center { text-align: center; }
+.max-width-800 { max-width: 800px; margin-left: auto; margin-right: auto; }
+
+/* Fluxo Probatório (Passos Numerados) */
+.steps .card {
+    position: relative;
+    padding-top: 50px; /* Espaço para o número */
+}
+.step-number {
+    position: absolute; top: 18px; left: 22px;
+    font-size: 34px; font-weight: 800;
+    color: var(--gold); opacity: 0.7;
+    line-height: 1;
+}
+
+/* Relatórios Vivos Multimídia */
+.live-report--full-width {
+    display: flex; flex-direction: column; gap: 30px;
+}
+@media (min-width: 900px) {
+    .live-report--full-width { flex-direction: row; align-items: stretch; }
+    .live-report__preview, .live-report__content { flex: 1; }
+}
+.live-report__preview {
+    min-height: 300px;
+    background: var(--panel);
+    border: 3px solid var(--gold-3);
+    border-radius: var(--radius);
+    display: grid; place-items: center;
+    box-shadow: inset 0 0 20px rgba(229,199,107,.15);
+}
+.preview-text {
+    color: var(--muted); font-style: italic;
+    padding: 20px; text-align: center;
+}
+.live-report__content {
+    padding: 24px;
+}
