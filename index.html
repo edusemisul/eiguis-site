@@ -2,22 +2,19 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>EÍGUIS Investigador</title>
 
-  <!-- Favicons + Manifest (tudo minúsculo) -->
-  <link rel="icon" href="/assets/favicon.ico?v=2" sizes="any">
+  <!-- Favicons / Manifest -->
+  <link rel="icon" href="/assets/favicon.ico?v=3" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/assets/site.webmanifest">
-  <meta name="theme-color" content="#0B0D10">
+  <meta name="theme-color" content="#0A0B0D">
 
-  <!-- SEO básico -->
-  <meta name="description" content="EÍGUIS Investigador — inteligência investigativa para OSINT, forense digital e relatórios com valor probatório.">
+  <meta name="description" content="EÍGUIS — inteligência investigativa, OSINT e relatórios vivos com valor probatório.">
   <meta name="robots" content="index,follow">
-
-  <!-- CSS -->
   <link rel="preload" href="/css/styles.css" as="style">
   <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -26,54 +23,105 @@
     <div class="brand">EÍGUIS <span>Investigador</span></div>
     <nav class="nav">
       <a href="#missao">Missão</a>
-      <a href="#capacidades">Capacidades</a>
+      <a href="#ecosistema">Ecossistema</a>
+      <a href="#relatorios">Relatórios Vivos</a>
       <a href="#contato">Contato</a>
     </nav>
   </header>
 
+  <!-- Hero: preto + dourado com marca d'água -->
   <main class="hero bg-logo">
     <div class="hero__overlay"></div>
     <section class="hero__content">
-      <h1>Ações deixam rastros. Nós os transformamos em provas.</h1>
+      <h1>Ações deixam rastros.<br> Nós os transformamos em provas.</h1>
       <p>
-        Inteligência investigativa para correlação de dados, análises OSINT e produção de relatórios
-        tecnicamente robustos, com precisão, ética e responsabilidade.
+        OSINT avançado, correlação de dados e análise forense com rigor técnico e linguagem probatória.
       </p>
-      <a class="btn" href="#contato">Fale conosco</a>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#relatorios">Ver relatórios em ação</a>
+        <a class="btn btn-outline" href="#ecosistema">Conhecer o ecossistema</a>
+      </div>
     </section>
   </main>
 
+  <!-- Missão -->
   <section id="missao" class="section">
     <h2>Missão</h2>
-    <p>
-      Transformar dados brutos (IPs, logs, prints, transações e relações) em evidências claras,
-      auditáveis e acionáveis para a tomada de decisão.
+    <p class="lead">
+      Converter dados brutos (IPs, logs, prints, transações e vínculos) em evidências **claras, auditáveis e acionáveis**,
+      sustentando decisões operacionais e jurídico-periciais.
     </p>
   </section>
 
-  <section id="capacidades" class="section grid">
+  <!-- Ecossistema: OSINT / Forense / Vínculos -->
+  <section id="ecosistema" class="section grid">
     <article class="card">
-      <h3>OSINT e Vínculos</h3>
-      <p>Coleta qualificada em fontes abertas, grafos de relacionamento e hipóteses testáveis.</p>
+      <div class="card__icon" aria-hidden="true">
+        <!-- lupa -->
+        <svg viewBox="0 0 24 24" width="28" height="28"><path d="M10 18a8 8 0 1 1 5.3-14.1 8 8 0 0 1-5.3 14.1Zm7.7-1.3 4.6 4.6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <h3>OSINT Direcionado</h3>
+      <p>Coleta qualificada, pivot por artefatos e triagem de fontes abertas com critérios probatórios.</p>
+      <ul class="bullets">
+        <li>Perfis, domínios, vazamentos, .onion</li>
+        <li>Correlação temporal e geográfica</li>
+        <li>Indicadores e alertas táticos</li>
+      </ul>
     </article>
+
     <article class="card">
-      <h3>Forense Digital</h3>
-      <p>Preservação, cadeia de custódia e análise técnica com linguagem pericial.</p>
+      <div class="card__icon" aria-hidden="true">
+        <!-- chip -->
+        <svg viewBox="0 0 24 24" width="28" height="28"><path d="M7 7h10v10H7zM3 10h4M17 10h4M10 3v4M10 17v4M14 3v4M14 17v4M3 14h4M17 14h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Forense & Cadeia de Custódia</h3>
+      <p>Preservação, hashing, trilhas de auditoria e linguagem técnica para sustentação em juízo.</p>
+      <ul class="bullets">
+        <li>Logs, headers, metadados</li>
+        <li>Procedimentos reprodutíveis</li>
+        <li>Laudos e anexos técnicos</li>
+      </ul>
     </article>
+
     <article class="card">
-      <h3>Relatórios Probatórios</h3>
-      <p>Resumo executivo, metodologia, achados técnicos, hipóteses e recomendações operacionais.</p>
+      <div class="card__icon" aria-hidden="true">
+        <!-- grafo -->
+        <svg viewBox="0 0 24 24" width="28" height="28"><path d="M6 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 24a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 3v7M9 12l6 6M6 9l0 9" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <h3>Vínculos & Grafos</h3>
+      <p>Entidades, arestas e padrões não-humanos revelados por correlação temporal/espacial.</p>
+      <ul class="bullets">
+        <li>Redes de relacionamento</li>
+        <li>Rotas e recorrências</li>
+        <li>Hipóteses testáveis</li>
+      </ul>
     </article>
   </section>
 
+  <!-- Relatórios vivos -->
+  <section id="relatorios" class="section">
+    <h2>Relatórios Vivos</h2>
+    <div class="live-report">
+      <div class="live-report__glass">
+        <h3>Demo tática</h3>
+        <p>Cards dinâmicos, anexos hashados, evidências encadeadas e exportação com sumário executivo.</p>
+        <a class="btn btn-gold" href="#contato">Solicitar demonstração</a>
+      </div>
+      <ul class="live-report__list">
+        <li><span class="dot"></span> Correlação de IP ⇢ Evento ⇢ Dispositivo</li>
+        <li><span class="dot"></span> Enriquecimento WHOIS/DNS/ASN</li>
+        <li><span class="dot"></span> Pivot em leaks, pastes e dumps</li>
+        <li><span class="dot"></span> Linha do tempo e mapa de ocorrências</li>
+      </ul>
+    </div>
+  </section>
+
   <footer id="contato" class="site-footer">
-    <p>© <span id="year"></span> EÍGUIS Investigador — Apresentação elaborada por membros da Igreja Presbiteriana do Brasil com apoio da IA Eíguis.</p>
+    <p>© <span id="year"></span> EÍGUIS Investigador. Todos os direitos reservados.</p>
     <p>Contato: <a href="mailto:contato@eiguis.ai">contato@eiguis.ai</a></p>
   </footer>
 
   <script src="/js/main.js" defer></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
