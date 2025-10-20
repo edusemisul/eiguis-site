@@ -1,0 +1,184 @@
+/* Variáveis de Cor */
+:root {
+    --color-black: #000000;
+    --color-gold: #c4a458;
+    --color-text-light: #e0e0e0;
+}
+
+/* Estilos Globais e Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--color-black);
+    color: var(--color-text-light);
+    font-family: 'Cinzel', serif;
+    text-align: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Logotipo */
+.logo-area {
+    margin-bottom: 30px;
+}
+
+.logo {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    
+    /* Animação sutil de brilho/glow */
+    box-shadow: 0 0 15px rgba(196, 164, 88, 0.4);
+    animation: subtleGlow 4s infinite alternate;
+}
+
+/* Efeito de Brilho da Imagem */
+@keyframes subtleGlow {
+    from {
+        box-shadow: 0 0 10px rgba(196, 164, 88, 0.3);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(196, 164, 88, 0.6);
+    }
+}
+
+
+/* Títulos e Textos */
+.main-title {
+    font-size: 3em;
+    color: var(--color-gold);
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(196, 164, 88, 0.7);
+}
+
+.subtitle {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: var(--color-gold);
+}
+
+.tagline {
+    font-style: italic;
+    font-size: 1.1em;
+    margin-bottom: 40px;
+    color: var(--color-text-light);
+}
+
+/* Destaques */
+.gold-highlight {
+    color: var(--color-gold);
+    font-weight: bold;
+}
+
+.active {
+    text-shadow: 0 0 8px rgba(196, 164, 88, 0.8);
+}
+
+/* Blocos de Conteúdo */
+section p, footer p {
+    margin: 10px 0;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+.status-block, .infrastructure-details {
+    background-color: rgba(10, 10, 10, 0.7);
+    padding: 20px;
+    margin: 30px auto;
+    border: 1px solid rgba(196, 164, 88, 0.3);
+    border-radius: 5px;
+    max-width: 600px;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid rgba(196, 164, 88, 0.3);
+    width: 50%;
+    margin: 40px auto;
+}
+
+/* Citação */
+.manifesto-quote {
+    font-size: 1.2em;
+    font-style: italic;
+    margin: 40px 0;
+    color: var(--color-gold);
+}
+
+.manifesto-quote .source {
+    display: block;
+    font-size: 0.8em;
+    margin-top: 10px;
+    color: var(--color-text-light);
+    font-style: normal;
+}
+
+/* Rodapé */
+footer {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(196, 164, 88, 0.1);
+}
+
+.copyright {
+    font-size: 0.8em;
+    color: #555;
+    margin-top: 15px;
+}
+
+/*
+* ANIMAÇÕES SOLICITADAS
+*/
+
+/* 1. Fade-in geral */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+header { animation-delay: 0.5s; }
+main { animation-delay: 1.5s; }
+footer { animation-delay: 3s; }
+
+/* 2. Efeito "Typing" em "Inteligência Investigativa Autônoma" */
+.typing-effect {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: 
+        typing 2s steps(39, end) 1s forwards,
+        blink-caret .75s step-end infinite;
+    border-right: .15em solid var(--color-gold);
+    display: inline-block;
+    color: var(--color-gold);
+}
+
+/* Animação da digitação */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* Animação do cursor piscando */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--color-gold); }
+}
