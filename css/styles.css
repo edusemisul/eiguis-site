@@ -43,25 +43,24 @@ h1,h2,h3 { color: var(--text); letter-spacing:.2px; }
   padding:120px 24px 60px; overflow:hidden;
   text-align:center;
   
-  /* GARANTIA DE COR: Força o texto interno a ser visível */
   color: var(--text); 
   
-  /* RESTAURAÇÃO DE BRILHO E ARTE DE CIRCUITO OTIMIZADA */
+  /* ****************************************************** */
+  /* AJUSTE FINAL: MAIS PARA O TOPO E MENOS TRANSPARENTE */
+  /* ****************************************************** */
   background: 
-    /* 1. Gradiente escuro para garantir que o texto branco/dourado se destaque */
-    linear-gradient(rgba(10,11,13,0.8), rgba(10,11,13,0.85)),
-    /* 2. Imagem do logo com CACHE BUSTER */
-    url("/assets/logo.png?v=20251021_final") no-repeat center top; /* AJUSTE FINAL: Topo absoluto */
+    /* 1. Gradiente MAIS CLARO (Transparência reduzida em 10% - 0.7 para 0.6) */
+    linear-gradient(rgba(10,11,13,0.6), rgba(10,11,13,0.75)), 
+    /* 2. Imagem do logo com POSIÇÃO AJUSTADA (agora a 0% do topo) */
+    url("/assets/logo.png?v=20251021_final") no-repeat center 0%; /* Subiu mais */
 
-  background-color: var(--bg); /* Cor de fundo primária */
-  background-size: 400px; /* Tamanho do logo no fundo */
+  background-color: var(--bg); 
+  background-size: 400px; 
   
-  /* Efeito de brilho que se propaga pela borda */
   box-shadow: 0 0 50px rgba(229,199,107,.1); 
-  filter: none; /* Garante que o texto não seja filtrado junto */
+  filter: none; 
 }
 .hero::before { 
-    /* Efeito de luz dourada pulsante por cima de tudo */
     content: ''; position: absolute; inset: 0;
     background: radial-gradient(circle at 50% 10%, rgba(229,199,107,.25) 0%, transparent 40%);
     pointer-events: none;
@@ -278,3 +277,4 @@ h3{ font-size: 22px; margin: 0 0 8px; color: var(--gold); }
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
+}
