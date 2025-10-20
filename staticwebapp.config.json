@@ -1,0 +1,25 @@
+cd "C:\Users\eduse\Desktop\Eiguis-Site"
+
+@'
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "/media/*", "/data/*"]
+  },
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/index.html",
+      "statusCode": 200
+    }
+  },
+  "mimeTypes": {
+    ".json": "application/json",
+    ".css": "text/css",
+    ".html": "text/html; charset=utf-8"
+  },
+  "globalHeaders": {
+    "Content-Type": "text/html; charset=utf-8",
+    "Cache-Control": "public, max-age=0, must-revalidate"
+  }
+}
+'@ | Out-File -Encoding utf8 -NoNewline .\staticwebapp.config.json
