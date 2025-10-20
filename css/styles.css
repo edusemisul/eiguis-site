@@ -42,7 +42,7 @@ h1,h2,h3 { color: var(--text); letter-spacing:.2px; }
   position:relative; min-height:85vh; display:grid; place-items:center;
   padding:120px 24px 60px; overflow:hidden;
   text-align:center;
-  /* IMPORTANTE: Removido background-image e filter para que o logo em <img> funcione! */
+  /* IMPORTANTE: Removido background-image para que o logo em <img> funcione! */
   background: var(--bg);
   box-shadow: inset 0 -50px 80px var(--bg); 
 }
