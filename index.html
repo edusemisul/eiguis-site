@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EÍGUIS Investigador</title>
+
+  <!-- Favicons + Manifest (tudo minúsculo) -->
+  <link rel="icon" href="/assets/favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <meta name="theme-color" content="#0B0D10">
+
+  <!-- SEO básico -->
+  <meta name="description" content="EÍGUIS Investigador — inteligência investigativa para OSINT, forense digital e relatórios com valor probatório.">
+  <meta name="robots" content="index,follow">
+
+  <!-- CSS -->
+  <link rel="preload" href="/css/styles.css" as="style">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">EÍGUIS <span>Investigador</span></div>
+    <nav class="nav">
+      <a href="#missao">Missão</a>
+      <a href="#capacidades">Capacidades</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <main class="hero bg-logo">
+    <div class="hero__overlay"></div>
+    <section class="hero__content">
+      <h1>Ações deixam rastros. Nós os transformamos em provas.</h1>
+      <p>
+        Inteligência investigativa para correlação de dados, análises OSINT e produção de relatórios
+        tecnicamente robustos, com precisão, ética e responsabilidade.
+      </p>
+      <a class="btn" href="#contato">Fale conosco</a>
+    </section>
+  </main>
+
+  <section id="missao" class="section">
+    <h2>Missão</h2>
+    <p>
+      Transformar dados brutos (IPs, logs, prints, transações e relações) em evidências claras,
+      auditáveis e acionáveis para a tomada de decisão.
+    </p>
+  </section>
+
+  <section id="capacidades" class="section grid">
+    <article class="card">
+      <h3>OSINT e Vínculos</h3>
+      <p>Coleta qualificada em fontes abertas, grafos de relacionamento e hipóteses testáveis.</p>
+    </article>
+    <article class="card">
+      <h3>Forense Digital</h3>
+      <p>Preservação, cadeia de custódia e análise técnica com linguagem pericial.</p>
+    </article>
+    <article class="card">
+      <h3>Relatórios Probatórios</h3>
+      <p>Resumo executivo, metodologia, achados técnicos, hipóteses e recomendações operacionais.</p>
+    </article>
+  </section>
+
+  <footer id="contato" class="site-footer">
+    <p>© <span id="year"></span> EÍGUIS Investigador — Apresentação elaborada por membros da Igreja Presbiteriana do Brasil com apoio da IA Eíguis.</p>
+    <p>Contato: <a href="mailto:contato@eiguis.ai">contato@eiguis.ai</a></p>
+  </footer>
+
+  <script src="/js/main.js" defer></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
