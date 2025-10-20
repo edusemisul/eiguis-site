@@ -46,19 +46,19 @@ h1,h2,h3 { color: var(--text); letter-spacing:.2px; }
   /* GARANTIA DE COR: Força o texto interno a ser visível */
   color: var(--text); 
   
-  /* REVERSÃO PARA LOGO COMO BACKGROUND (Arte de Circuito Flutuante) */
+  /* RESTAURAÇÃO DE BRILHO E ARTE DE CIRCUITO OTIMIZADA */
   background: 
     /* 1. Gradiente escuro para garantir que o texto branco/dourado se destaque */
     linear-gradient(rgba(10,11,13,0.8), rgba(10,11,13,0.85)),
-    /* 2. Imagem do logo no fundo */
-    url("/assets/logo.png?v=20251021_final") no-repeat center center;
+    /* 2. Imagem do logo com CACHE BUSTER */
+    url("/assets/logo.png?v=20251021_final") no-repeat center top; /* AJUSTE FINAL: Topo absoluto */
 
-  background-color: var(--bg); 
-  background-size: 400px;
+  background-color: var(--bg); /* Cor de fundo primária */
+  background-size: 400px; /* Tamanho do logo no fundo */
   
   /* Efeito de brilho que se propaga pela borda */
   box-shadow: 0 0 50px rgba(229,199,107,.1); 
-  filter: none; 
+  filter: none; /* Garante que o texto não seja filtrado junto */
 }
 .hero::before { 
     /* Efeito de luz dourada pulsante por cima de tudo */
