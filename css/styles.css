@@ -278,3 +278,4 @@ h3{ font-size: 22px; margin: 0 0 8px; color: var(--gold); }
 @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
+}
