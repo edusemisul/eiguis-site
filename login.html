@@ -1,72 +1,166 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login — EÍGUIS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EÍGUIS — Acesso Seguro</title>
+
+  <!-- Fonte opcional (leve) para visual moderno -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0; padding: 0;
-      background: #0b0b0e;
-      color: #f5f5f5;
-      font-family: Arial, sans-serif;
-      height: 100vh; display: flex; justify-content: center; align-items: center;
+    :root{
+      --bg:#0b0c10;
+      --card:#0f1117cc;      /* com transparência para glass */
+      --border:#222632;
+      --text:#e6e8ee;
+      --muted:#a5adbb;
+      --brand:#f1cd54;
+      --brand-900:#caa63a;
+      --focus:#7aa2ff;
+      --danger:#ff6b6b;
     }
-    .login-box {
-      background: #121218; border-radius: 12px; padding: 40px; width: 320px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.6); text-align: center;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+      color:var(--text); background:radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, transparent 60%), 
+                         radial-gradient(1000px 600px at -10% 110%, #111827 0%, transparent 60%), var(--bg);
+      display:grid; place-items:center; overflow:auto;
     }
-    h2 { margin-bottom: 24px; }
-    input {
-      width: 100%; padding: 12px; margin: 8px 0;
-      border-radius: 6px; border: 1px solid #2a2a33;
-      background: #0f0f13; color: #f5f5f5;
+    .wrap{width:100%; max-width:420px; padding:32px}
+    .card{
+      position:relative; backdrop-filter: blur(14px) saturate(120%);
+      background:var(--card); border:1px solid var(--border); border-radius:16px; 
+      padding:28px; box-shadow:0 10px 40px rgba(0,0,0,.45);
+      animation:pop .5s ease;
     }
-    button {
-      width: 100%; padding: 12px; margin-top: 12px;
-      background: #e7c14a; color: #141418; border: none;
-      font-weight: bold; cursor: pointer; border-radius: 6px;
+    @keyframes pop{from{transform:translateY(6px);opacity:.0}to{transform:none;opacity:1}}
+    .logo{
+      display:flex; align-items:center; gap:10px; margin-bottom:6px;
     }
-    button:hover { background: #f5d462; }
+    .logo-badge{
+      width:40px; height:40px; display:grid; place-items:center; 
+      border-radius:12px; background:linear-gradient(135deg, #1f2937, #0f172a);
+      border:1px solid var(--border); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+      font-weight:700; color:var(--brand);
+    }
+    h1{margin:.25rem 0 1rem 0; font-size:1.45rem; letter-spacing:.2px}
+    p.sub{margin:0 0 1.25rem 0; color:var(--muted); font-size:.95rem}
+
+    label{display:block; font-size:.9rem; margin:10px 0 6px 2px; color:#c9ced9}
+    .field{
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--border); border-radius:12px; 
+      background:#0b0e14; padding:12px 14px; transition:border .2s, box-shadow .2s;
+    }
+    .field:focus-within{border-color:var(--focus); box-shadow:0 0 0 3px rgba(122,162,255,.15)}
+    .field input{
+      all:unset; flex:1; color:var(--text); font-size:1rem;
+    }
+    .helper{display:flex; align-items:center; justify-content:space-between; margin:10px 2px 4px}
+    .helper a{color:var(--muted); font-size:.9rem; text-decoration:none}
+    .helper a:hover{color:var(--text)}
+    .btn{
+      width:100%; border:0; border-radius:12px; padding:14px 16px; margin-top:14px;
+      background:linear-gradient(180deg, var(--brand) 0%, var(--brand-900) 100%);
+      color:#14161b; font-weight:800; letter-spacing:.2px; cursor:pointer;
+      transition: transform .06s ease, filter .15s ease;
+    }
+    .btn:hover{filter:brightness(1.05)}
+    .btn:active{transform:translateY(1px)}
+    .msg{min-height:22px; margin-top:10px; color:var(--muted); font-size:.92rem}
+    .msg.error{color:var(--danger)}
+    .footer{
+      text-align:center; margin-top:14px; color:var(--muted); font-size:.85rem
+    }
+    /* Acessibilidade para navegação por teclado */
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Entrar no EÍGUIS</h2>
-    <input id="email" type="email" placeholder="Seu e-mail">
-    <input id="password" type="password" placeholder="Sua senha">
-    <button id="btnLogin">Entrar</button>
-    <p id="msg" style="color:#bdbdc7; margin-top:10px;"></p>
-  </div>
+  <main class="wrap">
+    <section class="card" role="dialog" aria-labelledby="tlt">
+      <div class="logo" aria-hidden="true">
+        <div class="logo-badge">EÍ</div>
+        <div>
+          <strong style="letter-spacing:.5px;">EÍGUIS • Inteligência Investigativa</strong><br>
+          <small style="color:var(--muted)">Acesso seguro ao ambiente do investigador</small>
+        </div>
+      </div>
 
+      <h1 id="tlt">Entrar no seu ambiente</h1>
+      <p class="sub">Use o e-mail e a senha cadastrados. Seus dados são protegidos e auditáveis.</p>
+
+      <form id="formLogin" novalidate>
+        <label for="email">E-mail</label>
+        <div class="field">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#7b8191" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+          <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" required />
+        </div>
+
+        <label for="password">Senha</label>
+        <div class="field">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#7b8191" aria-hidden="true"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4m6-6h-1V9a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2m-3 0H9V9a3 3 0 0 1 6 0z"/></svg>
+          <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+
+        <div class="helper">
+          <span></span>
+          <a href="#" aria-disabled="true">Esqueceu a senha?</a>
+        </div>
+
+        <button class="btn" id="btnLogin" type="submit">Acessar</button>
+        <div id="msg" class="msg" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="footer">Protegido por trilha de auditoria e política de acesso.</div>
+    </section>
+  </main>
+
+  <!-- SDK Supabase -->
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
+    // ► Troque pela URL do seu projeto e pela ANON KEY
     const SUPABASE_URL = 'https://bsdleapsmwwzyeeknsxyj.supabase.co';
     const SUPABASE_ANON_KEY = 'SUA_ANON_KEY_AQUI';
 
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    document.getElementById('btnLogin').onclick = async () => {
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      if (!email || !password) {
-        document.getElementById('msg').innerText = 'Preencha e-mail e senha.';
+    const form = document.getElementById('formLogin');
+    const emailEl = document.getElementById('email');
+    const passEl  = document.getElementById('password');
+    const msgEl   = document.getElementById('msg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msgEl.classList.remove('error');
+      msgEl.textContent = 'Validando credenciais…';
+
+      const email = emailEl.value.trim();
+      const password = passEl.value;
+
+      if (!email || !password){
+        msgEl.classList.add('error');
+        msgEl.textContent = 'Informe e-mail e senha.';
         return;
       }
 
       try {
         const { data, error } = await sb.auth.signInWithPassword({ email, password });
         if (error) {
-          console.error(error);
-          document.getElementById('msg').innerText = 'Erro: ' + error.message;
+          msgEl.classList.add('error');
+          msgEl.textContent = error.message || 'Falha ao autenticar.';
           return;
         }
+        msgEl.textContent = 'Acesso autorizado. Redirecionando…';
         window.location.href = 'painel.html';
-      } catch (e) {
-        console.error(e);
-        document.getElementById('msg').innerText = 'Erro de rede: ' + e.message;
+      } catch (ex) {
+        msgEl.classList.add('error');
+        msgEl.textContent = 'Erro de rede: ' + (ex?.message || 'conexão indisponível');
+        console.error(ex);
       }
-    };
+    });
   </script>
 </body>
 </html>
