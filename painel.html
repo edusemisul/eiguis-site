@@ -1,168 +1,144 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Painel EÍGUIS — Inteligência Investigativa</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Painel — EÍGUIS</title>
+  <link rel="icon" href="/favicon.ico">
+  <link href="https://unpkg.com/@fontsource/inter@5.0.8/variable.css" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b0c10;
-      --card:#10131bcc;
-      --border:#20242e;
-      --text:#e6e8ee;
-      --muted:#a5adbb;
-      --brand:#f1cd54;
-      --brand-dark:#c9a73b;
-      --focus:#7aa2ff;
-      --accent:#50fa7b;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
-      color:var(--text);
-      background:radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, transparent 60%),
-                 radial-gradient(1000px 600px at -10% 110%, #111827 0%, transparent 60%), var(--bg);
-      overflow:auto;
-    }
-
-    header{
-      display:flex; justify-content:space-between; align-items:center;
-      padding:18px 28px;
-      border-bottom:1px solid var(--border);
-      background:#0f1116e6;
-      backdrop-filter:blur(10px);
-      position:sticky; top:0; z-index:10;
-    }
-
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:700; letter-spacing:.4px;
-    }
-    .brand-badge{
-      width:34px; height:34px; display:grid; place-items:center;
-      background:linear-gradient(145deg,#1e2636,#111821); border-radius:10px;
-      color:var(--brand); border:1px solid var(--border);
-    }
-
-    button{
-      cursor:pointer; font-family:inherit; font-weight:600;
-      border:none; border-radius:10px; padding:10px 18px;
-      background:linear-gradient(180deg,var(--brand),var(--brand-dark));
-      color:#14161b; transition:filter .15s, transform .05s;
-    }
-    button:hover{filter:brightness(1.08)}
-    button:active{transform:translateY(1px)}
-
-    main{max-width:960px; margin:30px auto; padding:0 20px;}
-    .card{
-      background:var(--card); border:1px solid var(--border); border-radius:14px;
-      padding:24px; margin-bottom:24px; backdrop-filter:blur(10px);
-      box-shadow:0 0 30px rgba(0,0,0,.35);
-      animation:fadeIn .5s ease;
-    }
-    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-
-    h2{margin-top:0; color:var(--brand); font-size:1.3rem;}
-    input,textarea{
-      width:100%; padding:12px; border-radius:10px; border:1px solid var(--border);
-      background:#0b0e14; color:var(--text); margin-top:8px; font-size:1rem;
-    }
-
-    .table-container{overflow-x:auto;}
-    table{width:100%; border-collapse:collapse; margin-top:14px;}
-    th,td{padding:10px 12px; border-bottom:1px solid var(--border);}
-    th{text-align:left; color:var(--muted); font-weight:600; font-size:.9rem;}
-    tr:hover{background-color:#14182166;}
-    .msg{margin-top:10px; color:var(--muted); font-size:.9rem;}
+    :root{color-scheme:dark light}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:"InterVariable",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;background:#0a0f1c;color:#e5e7eb}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(148,163,184,.16);background:#0c1324}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{width:30px;height:30px;border-radius:8px;background:#facc15;color:#111;display:grid;place-items:center;font-weight:900}
+    .wrap{max-width:1000px;margin:0 auto;padding:24px}
+    h2{margin:8px 0 16px}
+    .card{background:#0c1324;border:1px solid rgba(148,163,184,.16);border-radius:14px;padding:16px;margin-bottom:16px}
+    input{width:100%;background:#0b1222;border:1px solid #1f2a44;border-radius:10px;padding:12px 12px;color:#e5e7eb;font-size:14px;outline:none;transition:.2s}
+    input:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.15)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .btn{border:0;border-radius:10px;padding:12px 14px;font-weight:700;font-size:14px;background:linear-gradient(180deg,#93c5fd 0%,#3b82f6 100%);color:#0b1020;cursor:pointer}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{padding:10px;border-bottom:1px solid rgba(148,163,184,.14);text-align:left}
+    .muted{color:#93a2b6;font-size:13px}
+    .danger{background:linear-gradient(180deg,#fda4af 0%,#ef4444 100%);color:#160a0a}
+    .err{color:#fda4af;font-size:13px;margin-top:10px}
   </style>
 </head>
-
 <body>
   <header>
     <div class="brand">
-      <div class="brand-badge">EÍ</div>
-      <div>EÍGUIS — Painel Investigativo</div>
+      <div class="logo">Ei</div>
+      <div>
+        <div style="font-weight:800">EÍGUIS • Painel</div>
+        <div id="who" class="muted"></div>
+      </div>
     </div>
-    <button id="btnLogout">Sair</button>
+    <div>
+      <button id="logout" class="btn danger">Sair</button>
+    </div>
   </header>
 
-  <main>
-    <section class="card">
+  <div class="wrap">
+    <div class="card">
       <h2>Novo Caso</h2>
-      <input id="title" placeholder="Título do caso">
-      <textarea id="description" rows="4" placeholder="Descrição detalhada ou observações"></textarea>
-      <button id="btnCreate">Registrar Caso</button>
-      <div id="msg" class="msg"></div>
-    </section>
+      <div class="row">
+        <div>
+          <label class="muted">Título</label>
+          <input id="titulo" placeholder="Ex.: RO 12345/2025 – Furto qualificado" />
+        </div>
+        <div>
+          <label class="muted">Descrição</label>
+          <input id="descricao" placeholder="Breve resumo (opcional)" />
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:10px">
+        <button id="criar" class="btn">Criar caso</button>
+        <div id="err" class="err" style="display:none"></div>
+      </div>
+    </div>
 
-    <section class="card">
+    <div class="card">
       <h2>Meus Casos</h2>
-      <div id="list" class="table-container"></div>
-    </section>
-  </main>
+      <div class="muted" id="noRows" style="display:none">Nenhum caso ainda.</div>
+      <div style="overflow:auto">
+        <table id="tbl" style="display:none">
+          <thead>
+            <tr><th>ID</th><th>Título</th><th>Descrição</th><th>Criado em</th></tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script>
-    const SUPABASE_URL = 'https://bsdleapsmwwzyeeknsxyj.supabase.co';
-    const SUPABASE_ANON_KEY = 'SUA_ANON_KEY_AQUI';
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    let user = null;
+  <script type="module">
+    // ====== JÁ CONFIGURADO PARA O SEU PROJETO ======
+    const SUPABASE_URL = 'https://bsdleapswwzyeeknsxyj.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzZGxlYXBzd3d6eWVla25zeHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5NDcwNzAsImV4cCI6MjA3NzUyMzA3MH0.wlnWWRLuBPGs7F9na-IyDozuXz_L4MmtnT7JHVjXFXo';
+    // ================================================
 
-    async function ensureSession() {
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) {
-        window.location.href = 'login.html';
-      } else {
-        user = session.user;
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+
+    // Garante sessão
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) { location.href = '/login.html'; }
+
+    // Mostra quem é
+    const { data: { user } } = await supabase.auth.getUser();
+    document.getElementById('who').textContent = user?.email || 'Usuário';
+
+    // Logout
+    document.getElementById('logout').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      location.href = '/login.html';
+    });
+
+    const $ = id => document.getElementById(id);
+    const tbody = $('tbody'), tbl = $('tbl'), noRows = $('noRows'), err = $('err');
+
+    async function loadCases() {
+      err.style.display = 'none';
+      const { data, error } = await supabase
+        .from('cases')
+        .select('id,title,description,created_at')
+        .order('created_at', { ascending: false });
+
+      if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+
+      tbody.innerHTML = '';
+      if (!data || data.length === 0) {
+        tbl.style.display = 'none'; noRows.style.display = 'block'; return;
+      }
+      noRows.style.display = 'none'; tbl.style.display = 'table';
+      for (const row of data) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-family:ui-monospace,Menlo,Consolas">${row.id}</td>
+          <td>${row.title || '-'}</td>
+          <td>${row.description || '-'}</td>
+          <td>${new Date(row.created_at).toLocaleString('pt-BR')}</td>`;
+        tbody.appendChild(tr);
       }
     }
 
-    async function listCases() {
-      const { data, error } = await sb.from('cases').select('*').order('created_at', { ascending: false });
-      if (error) { document.getElementById('list').innerHTML = `<div class="msg">Erro: ${error.message}</div>`; return; }
-      if (!data.length) { document.getElementById('list').innerHTML = '<div class="msg">Nenhum caso registrado.</div>'; return; }
-      const rows = data.map(c => `
-        <tr>
-          <td>${c.title}</td>
-          <td>${c.description ?? ''}</td>
-          <td>${new Date(c.created_at).toLocaleString('pt-BR')}</td>
-        </tr>`).join('');
-      document.getElementById('list').innerHTML = `
-        <table>
-          <thead><tr><th>Título</th><th>Descrição</th><th>Data</th></tr></thead>
-          <tbody>${rows}</tbody>
-        </table>`;
-    }
+    $('criar').addEventListener('click', async () => {
+      err.style.display = 'none';
+      const title = $('titulo').value.trim();
+      const description = $('descricao').value.trim();
+      if (!title) { err.textContent = 'Informe um título.'; err.style.display = 'block'; return; }
+      const { error } = await supabase.from('cases').insert({ title, description });
+      if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
+      $('titulo').value = ''; $('descricao').value = '';
+      await loadCases();
+    });
 
-    async function createCase() {
-      const title = document.getElementById('title').value.trim();
-      const desc = document.getElementById('description').value.trim();
-      const msg = document.getElementById('msg');
-      if (!title) { msg.textContent = 'Informe um título.'; return; }
-      msg.textContent = 'Salvando…';
-      const { error } = await sb.from('cases').insert({ user_id: user.id, title, description: desc });
-      if (error) { msg.textContent = 'Erro: ' + error.message; return; }
-      msg.textContent = '✅ Caso registrado com sucesso.';
-      document.getElementById('title').value = '';
-      document.getElementById('description').value = '';
-      listCases();
-    }
-
-    async function logout() {
-      await sb.auth.signOut();
-      window.location.href = 'login.html';
-    }
-
-    (async () => {
-      await ensureSession();
-      document.getElementById('btnCreate').onclick = createCase;
-      document.getElementById('btnLogout').onclick = logout;
-      listCases();
-    })();
+    await loadCases();
   </script>
 </body>
 </html>
