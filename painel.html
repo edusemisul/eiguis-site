@@ -1,79 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Painel — EÍGUIS</title>
   <style>
-    body { background:#0b0b0e; color:#f5f5f5; font-family:system-ui,Arial; margin:0 }
-    header { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:#121218; border-bottom:1px solid #20202a }
-    main { max-width:920px; margin:24px auto; padding:0 16px }
-    h1 { font-size:22px; margin:0 0 12px }
-    .card { background:#141418; border:1px solid #23232d; border-radius:12px; padding:16px; margin:12px 0 }
-    input, textarea, button { width:100%; padding:10px; margin:6px 0; border-radius:8px; border:1px solid #2a2a33; background:#0f0f13; color:#e8e8ea }
-    button { width:auto; padding:10px 16px; background:#e7c14a; color:#141418; font-weight:700; border:none; cursor:pointer }
-    table { width:100%; border-collapse:collapse; margin-top:8px }
+    body { background:#0b0b0e; color:#f5f5f5; font-family:Arial,sans-serif; margin:0 }
+    header { background:#121218; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #20202a }
+    h1 { margin:0; font-size:20px }
+    main { max-width:900px; margin:24px auto; padding:0 16px }
+    .card { background:#141418; padding:20px; border-radius:10px; margin-bottom:20px; border:1px solid #23232d }
+    input, textarea, button { width:100%; padding:10px; margin-top:8px; border-radius:8px; border:1px solid #2a2a33; background:#0f0f13; color:#e8e8ea }
+    button { background:#e7c14a; color:#141418; font-weight:bold; border:none; cursor:pointer; width:auto; padding:10px 18px }
+    table { width:100%; border-collapse:collapse; margin-top:12px }
     th, td { text-align:left; padding:10px; border-bottom:1px solid #23232d }
   </style>
 </head>
 <body>
   <header>
-    <div><strong>EÍGUIS</strong> — Painel</div>
-    <div><button id="btnLogout">Sair</button></div>
+    <h1>Painel EÍGUIS</h1>
+    <button id="btnLogout">Sair</button>
   </header>
-
   <main>
-    <section class="card">
-      <h1>Novo Caso</h1>
-      <input id="title" placeholder="Título do caso" />
+    <div class="card">
+      <h2>Novo Caso</h2>
+      <input id="title" placeholder="Título do caso">
       <textarea id="description" rows="4" placeholder="Descrição (opcional)"></textarea>
-      <button id="btnCreate">Criar caso</button>
-      <div id="msg" style="margin-top:8px;color:#bdbdc7"></div>
-    </section>
+      <button id="btnCreate">Criar</button>
+      <p id="msg" style="color:#bdbdc7; margin-top:10px;"></p>
+    </div>
 
-    <section class="card">
-      <h1>Meus Casos</h1>
+    <div class="card">
+      <h2>Meus Casos</h2>
       <div id="list"></div>
-    </section>
+    </div>
   </main>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script>
-    const SUPABASE_URL = 'https://SEU-PROJECT-ID.supabase.co';
-    const SUPABASE_ANON_KEY = 'SUA-ANON-KEY';
+    const SUPABASE_URL = 'https://bsdleapsmwwzyeeknsxyj.supabase.co';
+    const SUPABASE_ANON_KEY = 'SUA_ANON_KEY_AQUI';
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    let currentUser = null;
+    let user = null;
 
     async function ensureSession() {
       const { data: { session } } = await sb.auth.getSession();
-      if (!session) { window.location.href = 'login.html'; return; }
-      currentUser = session.user;
+      if (!session) window.location.href = 'login.html';
+      else user = session.user;
     }
 
     async function listCases() {
       const { data, error } = await sb.from('cases').select('*').order('created_at', { ascending: false });
       if (error) { document.getElementById('list').innerText = 'Erro: ' + error.message; return; }
-      if (!data || data.length === 0) { document.getElementById('list').innerHTML = '<em>Nenhum caso ainda.</em>'; return; }
-      const rows = data.map(c =>
-        `<tr><td>${c.title}</td><td>${c.description ?? ''}</td><td>${new Date(c.created_at).toLocaleString('pt-BR')}</td></tr>`
-      ).join('');
-      document.getElementById('list').innerHTML =
-        `<table><thead><tr><th>Título</th><th>Descrição</th><th>Criado em</th></tr></thead><tbody>${rows}</tbody></table>`;
+      if (!data.length) { document.getElementById('list').innerHTML = '<em>Nenhum caso registrado.</em>'; return; }
+      const rows = data.map(c => `<tr><td>${c.title}</td><td>${c.description ?? ''}</td><td>${new Date(c.created_at).toLocaleString('pt-BR')}</td></tr>`).join('');
+      document.getElementById('list').innerHTML = `<table><thead><tr><th>Título</th><th>Descrição</th><th>Data</th></tr></thead><tbody>${rows}</tbody></table>`;
     }
 
     async function createCase() {
       const title = document.getElementById('title').value.trim();
-      const description = document.getElementById('description').value.trim();
+      const desc = document.getElementById('description').value.trim();
       if (!title) { document.getElementById('msg').innerText = 'Informe um título.'; return; }
-      const { error } = await sb.from('cases').insert({ user_id: currentUser.id, title, description });
-      if (error) { document.getElementById('msg').innerText = 'Erro ao criar: ' + error.message; }
-      else { document.getElementById('msg').innerText = 'Caso criado com sucesso.'; document.getElementById('title').value = ''; document.getElementById('description').value = ''; listCases(); }
+      const { error } = await sb.from('cases').insert({ user_id: user.id, title, description: desc });
+      if (error) { document.getElementById('msg').innerText = 'Erro: ' + error.message; return; }
+      document.getElementById('msg').innerText = 'Caso criado com sucesso.';
+      document.getElementById('title').value = '';
+      document.getElementById('description').value = '';
+      listCases();
     }
 
-    async function logout() { await sb.auth.signOut(); window.location.href = 'login.html'; }
+    async function logout() {
+      await sb.auth.signOut();
+      window.location.href = 'login.html';
+    }
 
-    (async () => { await ensureSession(); document.getElementById('btnCreate').onclick = createCase; document.getElementById('btnLogout').onclick = logout; listCases(); })();
+    (async () => {
+      await ensureSession();
+      document.getElementById('btnCreate').onclick = createCase;
+      document.getElementById('btnLogout').onclick = logout;
+      listCases();
+    })();
   </script>
 </body>
 </html>
-
