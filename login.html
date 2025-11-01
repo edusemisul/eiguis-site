@@ -1,166 +1,97 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EÍGUIS — Acesso Seguro</title>
-
-  <!-- Fonte opcional (leve) para visual moderno -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Entrar — EÍGUIS</title>
+  <link rel="icon" href="/favicon.ico">
+  <link href="https://unpkg.com/@fontsource/inter@5.0.8/variable.css" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b0c10;
-      --card:#0f1117cc;      /* com transparência para glass */
-      --border:#222632;
-      --text:#e6e8ee;
-      --muted:#a5adbb;
-      --brand:#f1cd54;
-      --brand-900:#caa63a;
-      --focus:#7aa2ff;
-      --danger:#ff6b6b;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
-      color:var(--text); background:radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, transparent 60%), 
-                         radial-gradient(1000px 600px at -10% 110%, #111827 0%, transparent 60%), var(--bg);
-      display:grid; place-items:center; overflow:auto;
-    }
-    .wrap{width:100%; max-width:420px; padding:32px}
-    .card{
-      position:relative; backdrop-filter: blur(14px) saturate(120%);
-      background:var(--card); border:1px solid var(--border); border-radius:16px; 
-      padding:28px; box-shadow:0 10px 40px rgba(0,0,0,.45);
-      animation:pop .5s ease;
-    }
-    @keyframes pop{from{transform:translateY(6px);opacity:.0}to{transform:none;opacity:1}}
-    .logo{
-      display:flex; align-items:center; gap:10px; margin-bottom:6px;
-    }
-    .logo-badge{
-      width:40px; height:40px; display:grid; place-items:center; 
-      border-radius:12px; background:linear-gradient(135deg, #1f2937, #0f172a);
-      border:1px solid var(--border); box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
-      font-weight:700; color:var(--brand);
-    }
-    h1{margin:.25rem 0 1rem 0; font-size:1.45rem; letter-spacing:.2px}
-    p.sub{margin:0 0 1.25rem 0; color:var(--muted); font-size:.95rem}
-
-    label{display:block; font-size:.9rem; margin:10px 0 6px 2px; color:#c9ced9}
-    .field{
-      display:flex; align-items:center; gap:10px;
-      border:1px solid var(--border); border-radius:12px; 
-      background:#0b0e14; padding:12px 14px; transition:border .2s, box-shadow .2s;
-    }
-    .field:focus-within{border-color:var(--focus); box-shadow:0 0 0 3px rgba(122,162,255,.15)}
-    .field input{
-      all:unset; flex:1; color:var(--text); font-size:1rem;
-    }
-    .helper{display:flex; align-items:center; justify-content:space-between; margin:10px 2px 4px}
-    .helper a{color:var(--muted); font-size:.9rem; text-decoration:none}
-    .helper a:hover{color:var(--text)}
-    .btn{
-      width:100%; border:0; border-radius:12px; padding:14px 16px; margin-top:14px;
-      background:linear-gradient(180deg, var(--brand) 0%, var(--brand-900) 100%);
-      color:#14161b; font-weight:800; letter-spacing:.2px; cursor:pointer;
-      transition: transform .06s ease, filter .15s ease;
-    }
-    .btn:hover{filter:brightness(1.05)}
-    .btn:active{transform:translateY(1px)}
-    .msg{min-height:22px; margin-top:10px; color:var(--muted); font-size:.92rem}
-    .msg.error{color:var(--danger)}
-    .footer{
-      text-align:center; margin-top:14px; color:var(--muted); font-size:.85rem
-    }
-    /* Acessibilidade para navegação por teclado */
-    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+    :root{color-scheme:dark light}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;font-family:"InterVariable",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji",sans-serif;background:radial-gradient(1200px 700px at 10% -10%,#0f172a 0%,#0b1022 40%,#070b17 70%,#050812 100%) no-repeat center fixed;color:#e5e7eb}
+    .wrap{min-height:100%;display:grid;place-items:center;padding:24px}
+    .card{width:100%;max-width:420px;background:rgba(15,23,42,.6);backdrop-filter: blur(10px);border:1px solid rgba(148,163,184,.16);border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.55);padding:28px}
+    h1{font-size:28px;line-height:1.1;margin:0 0 8px;font-weight:800;letter-spacing:.2px}
+    .sub{font-size:13px;color:#94a3b8;margin:0 0 20px}
+    label{display:block;font-size:13px;color:#cbd5e1;margin:14px 0 8px}
+    input{width:100%;background:#0b1222;border:1px solid #1f2a44;border-radius:12px;padding:14px 14px;color:#e5e7eb;font-size:15px;outline:none;transition:.2s}
+    input:focus{border-color:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,.15)}
+    .btn{width:100%;border:0;border-radius:12px;padding:14px 16px;margin-top:18px;font-weight:700;font-size:15px;background:linear-gradient(180deg,#f8d54a 0%,#e5b800 100%);color:#1a1a1a;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-1px);filter:saturate(110%)}
+    .err{margin-top:12px;font-size:13px;color:#fda4af}
+    .muted{margin-top:14px;font-size:12px;color:#93a2b6;text-align:center}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <section class="card" role="dialog" aria-labelledby="tlt">
-      <div class="logo" aria-hidden="true">
-        <div class="logo-badge">EÍ</div>
+  <div class="wrap">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:36px;height:36px;border-radius:10px;background:#facc15;color:#111;display:grid;place-items:center;font-weight:900">Ei</div>
         <div>
-          <strong style="letter-spacing:.5px;">EÍGUIS • Inteligência Investigativa</strong><br>
-          <small style="color:var(--muted)">Acesso seguro ao ambiente do investigador</small>
+          <div style="font-weight:800;letter-spacing:.2px">EÍGUIS • Inteligência Investigativa</div>
+          <div style="font-size:12px;color:#93a2b6">Acesso seguro ao ambiente do investigador</div>
         </div>
       </div>
 
-      <h1 id="tlt">Entrar no seu ambiente</h1>
-      <p class="sub">Use o e-mail e a senha cadastrados. Seus dados são protegidos e auditáveis.</p>
+      <h1>Entrar</h1>
+      <p class="sub">Use seu e-mail e senha cadastrados.</p>
 
-      <form id="formLogin" novalidate>
-        <label for="email">E-mail</label>
-        <div class="field">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#7b8191" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
-          <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" required />
-        </div>
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="seu@email.com" autocomplete="email" />
 
-        <label for="password">Senha</label>
-        <div class="field">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="#7b8191" aria-hidden="true"><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4m6-6h-1V9a5 5 0 0 0-10 0v2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2m-3 0H9V9a3 3 0 0 1 6 0z"/></svg>
-          <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
-        </div>
+      <label for="password">Senha</label>
+      <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" />
 
-        <div class="helper">
-          <span></span>
-          <a href="#" aria-disabled="true">Esqueceu a senha?</a>
-        </div>
+      <button id="loginBtn" class="btn">Acessar</button>
+      <div id="err" class="err" style="display:none"></div>
+      <div class="muted">Protegido por trilha de auditoria e política de acesso.</div>
+    </div>
+  </div>
 
-        <button class="btn" id="btnLogin" type="submit">Acessar</button>
-        <div id="msg" class="msg" role="status" aria-live="polite"></div>
-      </form>
+  <script type="module">
+    // ====== JÁ CONFIGURADO PARA O SEU PROJETO ======
+    const SUPABASE_URL = 'https://bsdleapswwzyeeknsxyj.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzZGxlYXBzd3d6eWVla25zeHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5NDcwNzAsImV4cCI6MjA3NzUyMzA3MH0.wlnWWRLuBPGs7F9na-IyDozuXz_L4MmtnT7JHVjXFXo';
+    // ================================================
 
-      <div class="footer">Protegido por trilha de auditoria e política de acesso.</div>
-    </section>
-  </main>
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-  <!-- SDK Supabase -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script>
-    // ► Troque pela URL do seu projeto e pela ANON KEY
-    const SUPABASE_URL = 'https://bsdleapsmwwzyeeknsxyj.supabase.co';
-    const SUPABASE_ANON_KEY = 'SUA_ANON_KEY_AQUI';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
 
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Se já tiver sessão, vai para o painel
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) location.href = '/painel.html';
 
-    const form = document.getElementById('formLogin');
-    const emailEl = document.getElementById('email');
-    const passEl  = document.getElementById('password');
-    const msgEl   = document.getElementById('msg');
+    const $ = (id) => document.getElementById(id);
+    const emailEl = $('email');
+    const passEl  = $('password');
+    const errEl   = $('err');
+    const btn     = $('loginBtn');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      msgEl.classList.remove('error');
-      msgEl.textContent = 'Validando credenciais…';
-
-      const email = emailEl.value.trim();
-      const password = passEl.value;
-
-      if (!email || !password){
-        msgEl.classList.add('error');
-        msgEl.textContent = 'Informe e-mail e senha.';
-        return;
-      }
-
+    btn.addEventListener('click', async () => {
+      errEl.style.display = 'none'; errEl.textContent = '';
+      btn.disabled = true; btn.textContent = 'Entrando...';
       try {
-        const { data, error } = await sb.auth.signInWithPassword({ email, password });
-        if (error) {
-          msgEl.classList.add('error');
-          msgEl.textContent = error.message || 'Falha ao autenticar.';
-          return;
-        }
-        msgEl.textContent = 'Acesso autorizado. Redirecionando…';
-        window.location.href = 'painel.html';
-      } catch (ex) {
-        msgEl.classList.add('error');
-        msgEl.textContent = 'Erro de rede: ' + (ex?.message || 'conexão indisponível');
-        console.error(ex);
+        const { error } = await supabase.auth.signInWithPassword({
+          email: emailEl.value.trim(),
+          password: passEl.value
+        });
+        if (error) throw error;
+        location.href = '/painel.html';
+      } catch (e) {
+        errEl.textContent = (e?.message || 'Falha ao entrar.').replace('fetch', 'conectar');
+        errEl.style.display = 'block';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Acessar';
       }
     });
+
+    [emailEl, passEl].forEach(el => el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') btn.click();
+    }));
   </script>
 </body>
 </html>
