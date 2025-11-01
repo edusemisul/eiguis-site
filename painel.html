@@ -1,143 +1,953 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Painel — EÍGUIS</title>
-  <link rel="icon" href="/favicon.ico">
-  <link href="https://unpkg.com/@fontsource/inter@5.0.8/variable.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Painel de Investigação — EÍGUIS.ai</title>
+  
+  <meta name="theme-color" content="#0A0B0D">
+  <link rel="icon" href="assets/favicon.ico?v=3" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
   <style>
-    :root{color-scheme:dark light}
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:"InterVariable",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;background:#0a0f1c;color:#e5e7eb}
-    header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(148,163,184,.16);background:#0c1324}
-    .brand{display:flex;gap:10px;align-items:center}
-    .logo{width:30px;height:30px;border-radius:8px;background:#facc15;color:#111;display:grid;place-items:center;font-weight:900}
-    .wrap{max-width:1000px;margin:0 auto;padding:24px}
-    h2{margin:8px 0 16px}
-    .card{background:#0c1324;border:1px solid rgba(148,163,184,.16);border-radius:14px;padding:16px;margin-bottom:16px}
-    input{width:100%;background:#0b1222;border:1px solid #1f2a44;border-radius:10px;padding:12px 12px;color:#e5e7eb;font-size:14px;outline:none;transition:.2s}
-    input:focus{border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.15)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .btn{border:0;border-radius:10px;padding:12px 14px;font-weight:700;font-size:14px;background:linear-gradient(180deg,#93c5fd 0%,#3b82f6 100%);color:#0b1020;cursor:pointer}
-    table{width:100%;border-collapse:collapse;font-size:14px}
-    th,td{padding:10px;border-bottom:1px solid rgba(148,163,184,.14);text-align:left}
-    .muted{color:#93a2b6;font-size:13px}
-    .danger{background:linear-gradient(180deg,#fda4af 0%,#ef4444 100%);color:#160a0a}
-    .err{color:#fda4af;font-size:13px;margin-top:10px}
+    :root{
+      --bg:#0A0B0D;
+      --panel:#0F1114;
+      --panel-light:#141821;
+      --text:#ECECEC;
+      --muted:#B3B6BB;
+      --gold:#E5C76B;
+      --gold-2:#C8A042;
+      --gold-3:#9C7A2F;
+      --stroke:#1A1E24;
+      --radius:12px;
+      --success:#10B981;
+      --danger:#EF4444;
+      --info:#3B82F6;
+    }
+    
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    
+    body {
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header do Painel */
+    .panel-header {
+      background: linear-gradient(180deg, rgba(15,17,20,0.98), rgba(15,17,20,0.95));
+      border-bottom: 1px solid var(--stroke);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .brand-panel {
+      font-weight: 900;
+      letter-spacing: 1px;
+      font-size: 18px;
+      color: var(--text);
+    }
+    .brand-panel span { color: var(--gold); font-weight: 400; }
+    
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 12px;
+      background: var(--bg);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+    }
+    
+    .user-info i { color: var(--gold); font-size: 14px; }
+    .user-email { color: var(--muted); font-size: 13px; }
+    
+    .btn-logout {
+      background: rgba(239,68,68,0.1);
+      color: var(--danger);
+      border: 1px solid rgba(239,68,68,0.3);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-logout:hover {
+      background: var(--danger);
+      color: white;
+      transform: translateY(-1px);
+    }
+    
+    /* Layout Principal */
+    .panel-container {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: var(--panel);
+      border-right: 1px solid var(--stroke);
+      padding: 20px;
+      overflow-y: auto;
+    }
+    
+    .sidebar h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin: 0 0 16px 0;
+      font-weight: 600;
+    }
+    
+    .case-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .case-item {
+      padding: 12px;
+      background: var(--bg);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .case-item:hover {
+      border-color: var(--gold-3);
+      background: var(--panel-light);
+    }
+    
+    .case-item.active {
+      border-color: var(--gold);
+      background: rgba(229,199,107,0.05);
+    }
+    
+    .case-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .case-date {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .btn-new-case {
+      width: 100%;
+      background: linear-gradient(90deg, var(--gold-2), var(--gold));
+      color: var(--bg);
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: all 0.3s;
+    }
+    
+    .btn-new-case:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(229,199,107,0.3);
+    }
+    
+    /* Área Principal de Trabalho */
+    .main-content {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(229,199,107,0.03) 0%, transparent 50%),
+        var(--bg);
+    }
+    
+    .workspace {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Cards de Ação */
+    .action-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    
+    .action-card {
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .action-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-2), var(--gold));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    
+    .action-card:hover {
+      border-color: var(--gold-3);
+      background: var(--panel-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    
+    .action-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .action-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(229,199,107,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 24px;
+      color: var(--gold);
+    }
+    
+    .action-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .action-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    
+    /* Área de Upload */
+    .upload-zone {
+      background: var(--panel);
+      border: 2px dashed var(--stroke);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 24px;
+      transition: all 0.3s;
+    }
+    
+    .upload-zone.dragover {
+      border-color: var(--gold);
+      background: rgba(229,199,107,0.05);
+    }
+    
+    .upload-icon {
+      font-size: 48px;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    
+    .upload-text {
+      font-size: 16px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    
+    .upload-subtext {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    
+    input[type="file"] {
+      display: none;
+    }
+    
+    .btn-upload {
+      background: var(--bg);
+      border: 1px solid var(--gold-3);
+      color: var(--gold);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.3s;
+    }
+    
+    .btn-upload:hover {
+      background: rgba(229,199,107,0.1);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+    
+    /* Lista de Arquivos */
+    .files-list {
+      margin-top: 24px;
+    }
+    
+    .file-item {
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .file-icon {
+      color: var(--gold);
+      font-size: 20px;
+    }
+    
+    .file-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .file-size {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .file-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .btn-file-action {
+      background: var(--bg);
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    
+    .btn-file-action:hover {
+      color: var(--gold);
+      border-color: var(--gold-3);
+    }
+    
+    /* Terminal/Console do EÍGUIS */
+    .eiguis-terminal {
+      background: #000;
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-top: 24px;
+      font-family: 'Courier New', monospace;
+      min-height: 200px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .terminal-header {
+      color: var(--gold);
+      margin-bottom: 12px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+    
+    .terminal-line {
+      color: #00ff00;
+      font-size: 13px;
+      margin-bottom: 4px;
+      opacity: 0;
+      animation: fadeIn 0.3s forwards;
+    }
+    
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    
+    .terminal-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #00ff00;
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    
+    /* Modal de Novo Caso */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal.active {
+      display: flex;
+    }
+    
+    .modal-content {
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal-header {
+      margin-bottom: 24px;
+    }
+    
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 8px 0;
+    }
+    
+    .modal-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .form-input, .form-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--stroke);
+      border-radius: 8px;
+      padding: 12px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s;
+    }
+    
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(229,199,107,0.1);
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, var(--gold-2), var(--gold));
+      color: var(--bg);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(229,199,107,0.3);
+    }
+    
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--stroke);
+    }
+    
+    .btn-secondary:hover {
+      border-color: var(--gold-3);
+      background: var(--panel-light);
+    }
+    
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .panel-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--stroke);
+        max-height: 200px;
+      }
+      
+      .action-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .panel-header {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .header-left {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <div class="logo">Ei</div>
-      <div>
-        <div style="font-weight:800">EÍGUIS • Painel</div>
-        <div id="who" class="muted"></div>
+  <header class="panel-header">
+    <div class="header-left">
+      <div class="brand-panel">EÍGUIS.ai <span>Painel de Investigação</span></div>
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i>
+        <span class="user-email" id="userEmail">carregando...</span>
       </div>
     </div>
-    <div>
-      <button id="logout" class="btn danger">Sair</button>
-    </div>
+    <button class="btn-logout" id="btnLogout">
+      <i class="fas fa-sign-out-alt"></i> Sair
+    </button>
   </header>
-
-  <div class="wrap">
-    <div class="card">
-      <h2>Novo Caso</h2>
-      <div class="row">
-        <div>
-          <label class="muted">Título</label>
-          <input id="titulo" placeholder="Ex.: RO 12345/2025 – Furto qualificado" />
+  
+  <div class="panel-container">
+    <!-- Sidebar com casos -->
+    <aside class="sidebar">
+      <button class="btn-new-case" id="btnNewCase">
+        <i class="fas fa-plus"></i> Novo Caso
+      </button>
+      
+      <h3>Casos Ativos</h3>
+      <ul class="case-list" id="caseList">
+        <!-- Casos serão carregados aqui -->
+      </ul>
+    </aside>
+    
+    <!-- Área principal -->
+    <main class="main-content">
+      <div class="workspace">
+        <!-- Cards de Ação -->
+        <div class="action-cards">
+          <div class="action-card" id="cardUpload">
+            <div class="action-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="action-title">Upload de Evidências</div>
+            <div class="action-desc">Faça upload de arquivos, imagens, vídeos e documentos para análise forense</div>
+          </div>
+          
+          <div class="action-card" id="cardEiguis">
+            <div class="action-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="action-title">Acionar EÍGUIS</div>
+            <div class="action-desc">Ative o agente de inteligência para análise OSINT e correlação de dados</div>
+          </div>
+          
+          <div class="action-card" id="cardReport">
+            <div class="action-icon">
+              <i class="fas fa-file-contract"></i>
+            </div>
+            <div class="action-title">Gerar Relatório Vivo</div>
+            <div class="action-desc">Compile todas as evidências em um relatório dinâmico com cadeia de custódia</div>
+          </div>
         </div>
-        <div>
-          <label class="muted">Descrição</label>
-          <input id="descricao" placeholder="Breve resumo (opcional)" />
+        
+        <!-- Área de Upload -->
+        <div class="upload-zone" id="uploadZone" style="display: none;">
+          <i class="fas fa-cloud-upload-alt upload-icon"></i>
+          <div class="upload-text">Arraste arquivos aqui ou clique para selecionar</div>
+          <div class="upload-subtext">Formatos aceitos: PDF, DOC, JPG, PNG, MP4, MP3, ZIP</div>
+          <input type="file" id="fileInput" multiple>
+          <button class="btn-upload" onclick="document.getElementById('fileInput').click()">
+            Selecionar Arquivos
+          </button>
+        </div>
+        
+        <!-- Lista de Arquivos -->
+        <div class="files-list" id="filesList" style="display: none;">
+          <h3 style="color: var(--gold); margin-bottom: 16px;">
+            <i class="fas fa-folder-open"></i> Evidências Carregadas
+          </h3>
+          <!-- Arquivos aparecerão aqui -->
+        </div>
+        
+        <!-- Terminal do EÍGUIS -->
+        <div class="eiguis-terminal" id="eiguisTerminal" style="display: none;">
+          <div class="terminal-header">EÍGUIS INTELLIGENCE AGENT v2.0.1</div>
+          <div id="terminalContent">
+            <div class="terminal-cursor"></div>
+          </div>
         </div>
       </div>
-      <div style="margin-top:12px;display:flex;gap:10px">
-        <button id="criar" class="btn">Criar caso</button>
-        <div id="err" class="err" style="display:none"></div>
+    </main>
+  </div>
+  
+  <!-- Modal de Novo Caso -->
+  <div class="modal" id="modalNewCase">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Criar Novo Caso</h2>
+        <p class="modal-subtitle">Preencha as informações iniciais do caso</p>
       </div>
-    </div>
-
-    <div class="card">
-      <h2>Meus Casos</h2>
-      <div class="muted" id="noRows" style="display:none">Nenhum caso ainda.</div>
-      <div style="overflow:auto">
-        <table id="tbl" style="display:none">
-          <thead>
-            <tr><th>ID</th><th>Título</th><th>Descrição</th><th>Criado em</th></tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
+      
+      <form id="formNewCase">
+        <div class="form-group">
+          <label class="form-label">Título do Caso</label>
+          <input type="text" class="form-input" id="caseTitle" placeholder="Ex: RO 12345/2025 - Investigação Digital" required>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Tipo de Investigação</label>
+          <select class="form-input" id="caseType">
+            <option value="osint">OSINT - Inteligência de Fontes Abertas</option>
+            <option value="forensic">Análise Forense Digital</option>
+            <option value="fraud">Investigação de Fraude</option>
+            <option value="cyber">Crimes Cibernéticos</option>
+            <option value="other">Outro</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Descrição</label>
+          <textarea class="form-textarea" id="caseDescription" placeholder="Descreva brevemente o caso e os objetivos da investigação"></textarea>
+        </div>
+        
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="btnCancelCase">Cancelar</button>
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Criar Caso
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-
+  
   <script type="module">
-    // ====== JÁ CONFIGURADO PARA O SEU PROJETO ======
+    // Configuração Supabase
     const SUPABASE_URL = 'https://bsdleapswwzyeeknsxyj.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzZGxlYXBzd3d6eWVla25zeHlqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5NDcwNzAsImV4cCI6MjA3NzUyMzA3MH0.wlnWWRLuBPGs7F9na-IyDozuXz_L4MmtnT7JHVjXFXo';
-    // ================================================
-
+    
     import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
     });
-
-    // Garante sessão
+    
+    // Verificar sessão
     const { data: { session } } = await supabase.auth.getSession();
-    if (!session) { location.href = '/login.html'; }
-
-    // Mostra quem é
+    if (!session) {
+      location.href = '/login.html';
+    }
+    
+    // Mostrar email do usuário
     const { data: { user } } = await supabase.auth.getUser();
-    document.getElementById('who').textContent = user?.email || 'Usuário';
-
+    document.getElementById('userEmail').textContent = user?.email || 'Usuário';
+    
     // Logout
-    document.getElementById('logout').addEventListener('click', async () => {
+    document.getElementById('btnLogout').addEventListener('click', async () => {
       await supabase.auth.signOut();
       location.href = '/login.html';
     });
-
-    const $ = id => document.getElementById(id);
-    const tbody = $('tbody'), tbl = $('tbl'), noRows = $('noRows'), err = $('err');
-
-    async function loadCases() {
-      err.style.display = 'none';
-      const { data, error } = await supabase
-        .from('cases')
-        .select('id,title,description,created_at')
-        .order('created_at', { ascending: false });
-
-      if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
-
-      tbody.innerHTML = '';
-      if (!data || data.length === 0) {
-        tbl.style.display = 'none'; noRows.style.display = 'block'; return;
+    
+    // Modal de novo caso
+    const modal = document.getElementById('modalNewCase');
+    document.getElementById('btnNewCase').addEventListener('click', () => {
+      modal.classList.add('active');
+    });
+    
+    document.getElementById('btnCancelCase').addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+    
+    // Criar novo caso
+    document.getElementById('formNewCase').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const title = document.getElementById('caseTitle').value;
+      const type = document.getElementById('caseType').value;
+      const description = document.getElementById('caseDescription').value;
+      
+      try {
+        const { data, error } = await supabase
+          .from('cases')
+          .insert({ 
+            title, 
+            description,
+            case_type: type 
+          })
+          .select();
+        
+        if (error) throw error;
+        
+        modal.classList.remove('active');
+        document.getElementById('formNewCase').reset();
+        await loadCases();
+        
+        // Mostrar mensagem de sucesso
+        showNotification('Caso criado com sucesso!', 'success');
+      } catch (error) {
+        console.error('Erro ao criar caso:', error);
+        showNotification('Erro ao criar caso', 'error');
       }
-      noRows.style.display = 'none'; tbl.style.display = 'table';
-      for (const row of data) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td style="font-family:ui-monospace,Menlo,Consolas">${row.id}</td>
-          <td>${row.title || '-'}</td>
-          <td>${row.description || '-'}</td>
-          <td>${new Date(row.created_at).toLocaleString('pt-BR')}</td>`;
-        tbody.appendChild(tr);
+    });
+    
+    // Carregar casos
+    async function loadCases() {
+      try {
+        const { data, error } = await supabase
+          .from('cases')
+          .select('*')
+          .order('created_at', { ascending: false });
+        
+        if (error) throw error;
+        
+        const caseList = document.getElementById('caseList');
+        caseList.innerHTML = '';
+        
+        if (data && data.length > 0) {
+          data.forEach((case_item, index) => {
+            const li = document.createElement('li');
+            li.className = 'case-item';
+            if (index === 0) li.classList.add('active');
+            
+            li.innerHTML = `
+              <div class="case-title">${case_item.title || 'Sem título'}</div>
+              <div class="case-date">
+                <i class="fas fa-calendar"></i> 
+                ${new Date(case_item.created_at).toLocaleDateString('pt-BR')}
+              </div>
+            `;
+            
+            li.addEventListener('click', () => selectCase(case_item.id));
+            caseList.appendChild(li);
+          });
+        } else {
+          caseList.innerHTML = '<li style="padding: 12px; color: var(--muted); text-align: center;">Nenhum caso encontrado</li>';
+        }
+      } catch (error) {
+        console.error('Erro ao carregar casos:', error);
       }
     }
-
-    $('criar').addEventListener('click', async () => {
-      err.style.display = 'none';
-      const title = $('titulo').value.trim();
-      const description = $('descricao').value.trim();
-      if (!title) { err.textContent = 'Informe um título.'; err.style.display = 'block'; return; }
-      const { error } = await supabase.from('cases').insert({ title, description });
-      if (error) { err.textContent = error.message; err.style.display = 'block'; return; }
-      $('titulo').value = ''; $('descricao').value = '';
-      await loadCases();
+    
+    // Selecionar caso
+    function selectCase(caseId) {
+      document.querySelectorAll('.case-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+      
+      // Aqui você pode carregar os detalhes do caso selecionado
+      console.log('Caso selecionado:', caseId);
+    }
+    
+    // Ações dos cards
+    document.getElementById('cardUpload').addEventListener('click', () => {
+      document.getElementById('uploadZone').style.display = 'block';
+      document.getElementById('filesList').style.display = 'block';
+      document.getElementById('eiguisTerminal').style.display = 'none';
     });
-
+    
+    document.getElementById('cardEiguis').addEventListener('click', () => {
+      const terminal = document.getElementById('eiguisTerminal');
+      terminal.style.display = 'block';
+      startEiguisAnimation();
+    });
+    
+    document.getElementById('cardReport').addEventListener('click', () => {
+      showNotification('Gerando relatório vivo...', 'info');
+      setTimeout(() => {
+        showNotification('Relatório gerado com sucesso!', 'success');
+      }, 2000);
+    });
+    
+    // Upload de arquivos
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const filesList = document.getElementById('filesList');
+    
+    // Drag and drop
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('dragover');
+    });
+    
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+    
+    function handleFiles(files) {
+      Array.from(files).forEach(file => {
+        addFileToList(file);
+      });
+    }
+    
+    function addFileToList(file) {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'file-item';
+      
+      const fileSize = (file.size / 1024).toFixed(2) + ' KB';
+      
+      fileItem.innerHTML = `
+        <div class="file-info">
+          <i class="fas fa-file file-icon"></i>
+          <div>
+            <div class="file-name">${file.name}</div>
+            <div class="file-size">${fileSize}</div>
+          </div>
+        </div>
+        <div class="file-actions">
+          <button class="btn-file-action" title="Analisar">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="btn-file-action" title="Hash">
+            <i class="fas fa-fingerprint"></i>
+          </button>
+          <button class="btn-file-action" title="Remover">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `;
+      
+      const existingFiles = filesList.querySelector('.file-item');
+      if (!existingFiles) {
+        filesList.innerHTML = '<h3 style="color: var(--gold); margin-bottom: 16px;"><i class="fas fa-folder-open"></i> Evidências Carregadas</h3>';
+      }
+      
+      filesList.appendChild(fileItem);
+    }
+    
+    // Animação do terminal EÍGUIS
+    function startEiguisAnimation() {
+      const content = document.getElementById('terminalContent');
+      content.innerHTML = '';
+      
+      const messages = [
+        '[EÍGUIS] Inicializando agente de inteligência...',
+        '[EÍGUIS] Conectando aos servidores OSINT...',
+        '[EÍGUIS] Executando varredura em fontes abertas...',
+        '[EÍGUIS] Analisando redes sociais: Facebook, Instagram, X...',
+        '[EÍGUIS] Verificando registros públicos...',
+        '[EÍGUIS] Correlacionando dados encontrados...',
+        '[EÍGUIS] Gerando hash criptográfico das evidências...',
+        '[EÍGUIS] Análise concluída. 247 artefatos encontrados.',
+        '[EÍGUIS] Relatório pronto para visualização.'
+      ];
+      
+      let index = 0;
+      const interval = setInterval(() => {
+        if (index < messages.length) {
+          const line = document.createElement('div');
+          line.className = 'terminal-line';
+          line.textContent = messages[index];
+          content.appendChild(line);
+          index++;
+          
+          // Auto scroll
+          content.scrollTop = content.scrollHeight;
+        } else {
+          clearInterval(interval);
+          const cursor = document.createElement('span');
+          cursor.className = 'terminal-cursor';
+          content.appendChild(cursor);
+        }
+      }, 800);
+    }
+    
+    // Notificações
+    function showNotification(message, type = 'info') {
+      // Implementar sistema de notificações toast
+      console.log(`[${type}] ${message}`);
+    }
+    
+    // Carregar casos ao iniciar
     await loadCases();
   </script>
 </body>
