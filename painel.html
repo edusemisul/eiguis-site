@@ -1,39 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel — EÍGUIS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel EÍGUIS — Inteligência Investigativa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <style>
-    body { background:#0b0b0e; color:#f5f5f5; font-family:Arial,sans-serif; margin:0 }
-    header { background:#121218; padding:16px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #20202a }
-    h1 { margin:0; font-size:20px }
-    main { max-width:900px; margin:24px auto; padding:0 16px }
-    .card { background:#141418; padding:20px; border-radius:10px; margin-bottom:20px; border:1px solid #23232d }
-    input, textarea, button { width:100%; padding:10px; margin-top:8px; border-radius:8px; border:1px solid #2a2a33; background:#0f0f13; color:#e8e8ea }
-    button { background:#e7c14a; color:#141418; font-weight:bold; border:none; cursor:pointer; width:auto; padding:10px 18px }
-    table { width:100%; border-collapse:collapse; margin-top:12px }
-    th, td { text-align:left; padding:10px; border-bottom:1px solid #23232d }
+    :root{
+      --bg:#0b0c10;
+      --card:#10131bcc;
+      --border:#20242e;
+      --text:#e6e8ee;
+      --muted:#a5adbb;
+      --brand:#f1cd54;
+      --brand-dark:#c9a73b;
+      --focus:#7aa2ff;
+      --accent:#50fa7b;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      background:radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, transparent 60%),
+                 radial-gradient(1000px 600px at -10% 110%, #111827 0%, transparent 60%), var(--bg);
+      overflow:auto;
+    }
+
+    header{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:18px 28px;
+      border-bottom:1px solid var(--border);
+      background:#0f1116e6;
+      backdrop-filter:blur(10px);
+      position:sticky; top:0; z-index:10;
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:700; letter-spacing:.4px;
+    }
+    .brand-badge{
+      width:34px; height:34px; display:grid; place-items:center;
+      background:linear-gradient(145deg,#1e2636,#111821); border-radius:10px;
+      color:var(--brand); border:1px solid var(--border);
+    }
+
+    button{
+      cursor:pointer; font-family:inherit; font-weight:600;
+      border:none; border-radius:10px; padding:10px 18px;
+      background:linear-gradient(180deg,var(--brand),var(--brand-dark));
+      color:#14161b; transition:filter .15s, transform .05s;
+    }
+    button:hover{filter:brightness(1.08)}
+    button:active{transform:translateY(1px)}
+
+    main{max-width:960px; margin:30px auto; padding:0 20px;}
+    .card{
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      padding:24px; margin-bottom:24px; backdrop-filter:blur(10px);
+      box-shadow:0 0 30px rgba(0,0,0,.35);
+      animation:fadeIn .5s ease;
+    }
+    @keyframes fadeIn{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+
+    h2{margin-top:0; color:var(--brand); font-size:1.3rem;}
+    input,textarea{
+      width:100%; padding:12px; border-radius:10px; border:1px solid var(--border);
+      background:#0b0e14; color:var(--text); margin-top:8px; font-size:1rem;
+    }
+
+    .table-container{overflow-x:auto;}
+    table{width:100%; border-collapse:collapse; margin-top:14px;}
+    th,td{padding:10px 12px; border-bottom:1px solid var(--border);}
+    th{text-align:left; color:var(--muted); font-weight:600; font-size:.9rem;}
+    tr:hover{background-color:#14182166;}
+    .msg{margin-top:10px; color:var(--muted); font-size:.9rem;}
   </style>
 </head>
+
 <body>
   <header>
-    <h1>Painel EÍGUIS</h1>
+    <div class="brand">
+      <div class="brand-badge">EÍ</div>
+      <div>EÍGUIS — Painel Investigativo</div>
+    </div>
     <button id="btnLogout">Sair</button>
   </header>
+
   <main>
-    <div class="card">
+    <section class="card">
       <h2>Novo Caso</h2>
       <input id="title" placeholder="Título do caso">
-      <textarea id="description" rows="4" placeholder="Descrição (opcional)"></textarea>
-      <button id="btnCreate">Criar</button>
-      <p id="msg" style="color:#bdbdc7; margin-top:10px;"></p>
-    </div>
+      <textarea id="description" rows="4" placeholder="Descrição detalhada ou observações"></textarea>
+      <button id="btnCreate">Registrar Caso</button>
+      <div id="msg" class="msg"></div>
+    </section>
 
-    <div class="card">
+    <section class="card">
       <h2>Meus Casos</h2>
-      <div id="list"></div>
-    </div>
+      <div id="list" class="table-container"></div>
+    </section>
   </main>
 
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -45,25 +114,39 @@
 
     async function ensureSession() {
       const { data: { session } } = await sb.auth.getSession();
-      if (!session) window.location.href = 'login.html';
-      else user = session.user;
+      if (!session) {
+        window.location.href = 'login.html';
+      } else {
+        user = session.user;
+      }
     }
 
     async function listCases() {
       const { data, error } = await sb.from('cases').select('*').order('created_at', { ascending: false });
-      if (error) { document.getElementById('list').innerText = 'Erro: ' + error.message; return; }
-      if (!data.length) { document.getElementById('list').innerHTML = '<em>Nenhum caso registrado.</em>'; return; }
-      const rows = data.map(c => `<tr><td>${c.title}</td><td>${c.description ?? ''}</td><td>${new Date(c.created_at).toLocaleString('pt-BR')}</td></tr>`).join('');
-      document.getElementById('list').innerHTML = `<table><thead><tr><th>Título</th><th>Descrição</th><th>Data</th></tr></thead><tbody>${rows}</tbody></table>`;
+      if (error) { document.getElementById('list').innerHTML = `<div class="msg">Erro: ${error.message}</div>`; return; }
+      if (!data.length) { document.getElementById('list').innerHTML = '<div class="msg">Nenhum caso registrado.</div>'; return; }
+      const rows = data.map(c => `
+        <tr>
+          <td>${c.title}</td>
+          <td>${c.description ?? ''}</td>
+          <td>${new Date(c.created_at).toLocaleString('pt-BR')}</td>
+        </tr>`).join('');
+      document.getElementById('list').innerHTML = `
+        <table>
+          <thead><tr><th>Título</th><th>Descrição</th><th>Data</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>`;
     }
 
     async function createCase() {
       const title = document.getElementById('title').value.trim();
       const desc = document.getElementById('description').value.trim();
-      if (!title) { document.getElementById('msg').innerText = 'Informe um título.'; return; }
+      const msg = document.getElementById('msg');
+      if (!title) { msg.textContent = 'Informe um título.'; return; }
+      msg.textContent = 'Salvando…';
       const { error } = await sb.from('cases').insert({ user_id: user.id, title, description: desc });
-      if (error) { document.getElementById('msg').innerText = 'Erro: ' + error.message; return; }
-      document.getElementById('msg').innerText = 'Caso criado com sucesso.';
+      if (error) { msg.textContent = 'Erro: ' + error.message; return; }
+      msg.textContent = '✅ Caso registrado com sucesso.';
       document.getElementById('title').value = '';
       document.getElementById('description').value = '';
       listCases();
